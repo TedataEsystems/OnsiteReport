@@ -1,0 +1,153 @@
+<mat-card class="example-card">
+  <form [formGroup]="form" class="form-normal" (submit)="onSubmit()">
+    <mat-card-header>
+      <mat-card-title>
+        Daily Operation Form
+        <div class="" style="float: right;">
+          <button class="option submit" type="submit" [disabled]="IsBiger"><small>Submit</small></button>
+          <span class="separator mx-1">|</span>
+          <span class="option text-danger" (click)="onClose()"><small>Cancel</small></span>
+
+        </div>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-grid-list cols="2" rowHeight="450px">
+      <mat-grid-tile>
+        <div class="controles-container ">
+          <input type="hidden" formControlName="id">
+          <mat-form-field>
+            <input formControlName="complaintNumber" matInput placeholder="complaint Number*">
+            <mat-error>This field accept only number.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input formControlName="PSDID" matInput placeholder="PSDID*">
+            <mat-error>This field is mandatory and accept only number.</mat-error>
+          </mat-form-field>
+
+
+          <mat-form-field>
+            <input formControlName="circuitID" matInput placeholder="circuit ID*">
+            <mat-error>This field is mandatory and accept only number.</mat-error>
+          </mat-form-field>
+
+
+          <mat-form-field>
+            <input formControlName="customerName" matInput placeholder="customer Name*">
+            <mat-error>This field is mandatory and accept only characters.</mat-error>
+          </mat-form-field>
+
+
+         <mat-form-field>
+            <mat-select class="select"  formControlName="popNameIds" placeholder="pop Name*"
+              (selectionChange)="OnChangePopName($event)">
+              <input type="text" autocomplete="off" matInput class="p-2" placeholder="Search by name..." #popNameSearch (input)="onPopNameInputChange()" >
+              <ng-container *ngFor="let popNameIds of popNames">
+                <mat-option value="{{popNameIds.id}}">{{popNameIds.name}}</mat-option>
+              </ng-container>
+            </mat-select>
+            <mat-error>This field is mandatory.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input formControlName="zoneName" matInput placeholder="zone Name*" readonly>
+            <mat-error>This field is mandatory.</mat-error>
+          </mat-form-field>
+       
+          <mat-form-field>
+            <mat-select class="select"  formControlName="operatorIds" placeholder="operator Name*">
+              <input type="text" autocomplete="off" matInput class="p-2" placeholder="Search by name..." #operatorSearch (input)="onOperatorsInputChange()" >
+              <ng-container *ngFor="let operatorIds of operators">
+                <mat-option value="{{operatorIds.id}}">{{operatorIds.name}}</mat-option>
+              </ng-container>
+            </mat-select>
+            <mat-error>This field is mandatory.</mat-error>
+          </mat-form-field>
+
+         
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div class="controles-container">
+          <mat-form-field>
+            <mat-select class="select" formControlName="techNameIds" placeholder="tech Name*">
+              <input type="text" autocomplete="off" matInput class="p-2" placeholder="Search by name..." #techNameSearch (input)="onTechNameInputChange()" >
+              <ng-container *ngFor="let techNameIds of techNames">
+                <mat-option value="{{techNameIds.id}}">{{techNameIds.name}}</mat-option>
+              </ng-container>
+            </mat-select>
+            <mat-error>This field is mandatory.</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select class="select" formControlName="remedyActionIds" placeholder="Remedy Action Name*">
+              <input type="text" autocomplete="off" matInput class="p-2" placeholder="Search by name..." #remedyActionsSearch (input)="onRemedyActionInputChange()" >
+              <ng-container *ngFor="let remedyActionIds of remedyActions">
+                <mat-option value="{{remedyActionIds.id}}">{{remedyActionIds.name}}</mat-option>
+              </ng-container>
+            </mat-select>
+            <mat-error>This field is mandatory.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input formControlName="notes" matInput placeholder="notes*">
+            <mat-error>This field is mandatory.</mat-error>
+          </mat-form-field>
+
+
+          <mat-form-field>
+            <mat-select class="select" formControlName="transmissionMediaIds" placeholder="transmission Media Name*">
+              <input type="text" autocomplete="off" matInput class="p-2" placeholder="Search by name..." #transmissionMediaSearch (input)="onTransmissionMediaInputChange()" >
+              <ng-container *ngFor="let transmissionMediaIds of transmissionMedia">
+                <mat-option value="{{transmissionMediaIds.id}}">{{transmissionMediaIds.name}}</mat-option>
+              </ng-container>
+            </mat-select>
+            <mat-error>This field is mandatory.</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select class="select" formControlName="statusIds" placeholder="status *" >
+              <input type="text" autocomplete="off" matInput class="p-2" placeholder="status name" #statusNameSearch (input)="onStatusInputChange()" >
+              <ng-container *ngFor="let statusIds of status">
+                <mat-option value="{{statusIds.id}}">{{statusIds.name}}</mat-option>
+              </ng-container>
+            </mat-select>
+            <mat-error>This field is mandatory.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input [ngxMatDatetimePicker]="createdDate" formControlName="createdDate" matInput
+              placeholder="created Date*" ng-model-options="{timezone: 'utc'}"  readonly>
+
+            <mat-datepicker-toggle matSuffix [for]="$any(createdDate)"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #createdDate [enableMeridian]="true" >
+            </ngx-mat-datetime-picker>
+            <mat-error>This field is mandatory.</mat-error>
+          </mat-form-field>
+
+
+          <mat-form-field>
+            <input [ngxMatDatetimePicker]="closedDate" (dateChange)="handleclosedDateChange($event)"  formControlName="closedDate" matInput placeholder="closed Date*" readonly>
+
+            <mat-datepicker-toggle matSuffix [for]="$any(closedDate)" ></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #closedDate  [enableMeridian]="true" >
+            </ngx-mat-datetime-picker>
+            <mat-error *ngIf="true">This field should less than or equal created Date.</mat-error>
+            <span *ngIf="IsBiger" class="mat-error ng-tns-c54-51">This field should be  less than or equal created Date.</span>
+          </mat-form-field>
+
+
+        </div>
+      </mat-grid-tile>
+
+    </mat-grid-list>
+
+
+
+  </form>
+  <!-- [disabled]="form.invalid" -->
+</mat-card>
+  
+<app-loader *ngIf="loading">
+</app-loader>
+
+<!-- s -->

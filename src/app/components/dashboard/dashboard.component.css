@@ -1,0 +1,8 @@
+
+.chart-wrapper{
+padding: 10px 10px;}
+canvas{
+  height:350px !important;
+  width: 700px !important;
+  margin: 0 auto !important;
+}

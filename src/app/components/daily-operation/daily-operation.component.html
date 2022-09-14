@@ -1,0 +1,611 @@
+<mat-expansion-panel [(expanded)]="panelOpenState"  class="mb-3">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Advanced Search
+    </mat-panel-title>
+    <mat-panel-description>
+
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <mat-divider></mat-divider>
+  <form [formGroup]="form" class="form-normal" (submit)="AdvancedSearch()">
+    <mat-grid-list cols="2" rowHeight="400px">
+      <mat-grid-tile>
+        <div class="controles-container">
+
+          <mat-form-field>
+            <input formControlName="complaintNumber" matInput placeholder="complaint Number*">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input formControlName="PSDID" matInput placeholder="PSDID*">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input formControlName="circuitID" matInput placeholder="circuit ID*">
+          </mat-form-field>
+          <mat-form-field>
+            <input formControlName="customerName" matInput placeholder="customer Name*">
+          </mat-form-field>
+          
+          <mat-form-field>
+            <mat-select formControlName="popNameIds" placeholder="pop Name*"
+              (selectionChange)="OnChangePopName($event)">
+              <input type="text" autocomplete="off" matInput class="p-2" placeholder="Search by name..." #popNameSearch (input)="onPopNameInputChange()" >
+              <ng-container *ngFor="let popNameIds of popNames">
+                <mat-option value="{{popNameIds.id}}">{{popNameIds.name}}</mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input formControlName="zoneName" matInput placeholder="zone Name*" readonly>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-select formControlName="operatorIds" placeholder="operator Name*">
+              <input type="text" autocomplete="off" matInput class="p-2" placeholder="Search by name..." #operatorSearch (input)="onOperatorsInputChange()" >
+              <ng-container *ngFor="let operatorIds of operators">
+                <mat-option value="{{operatorIds.id}}">{{operatorIds.name}}</mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <input formControlName="assignedTo" matInput placeholder="Assigned To*">
+          </mat-form-field>
+       
+
+
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div class="controles-container">
+          <mat-form-field>
+            <mat-select formControlName="techNameIds" placeholder="tech Name*">
+              <input type="text" autocomplete="off" matInput class="p-2" placeholder="Search by name..." #techNameSearch (input)="onTechNameInputChange()" >
+              <ng-container *ngFor="let techNameIds of techNames">
+                <mat-option value="{{techNameIds.id}}">{{techNameIds.name}}</mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-select formControlName="remedyActionIds" placeholder="Remedy Action Name*">
+              <input type="text" autocomplete="off" matInput class="p-2" placeholder="Search by name..." #remedyActionsSearch (input)="onRemedyActionInputChange()" >
+              <ng-container *ngFor="let remedyActionIds of remedyActions">
+                <mat-option value="{{remedyActionIds.id}}">{{remedyActionIds.name}}</mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-select formControlName="transmissionMediaIds" placeholder="transmission Media Name*">
+              <input type="text" autocomplete="off" matInput class="p-2" placeholder="Search by name..." #transmissionMediaSearch (input)="onTransmissionMediaInputChange()" >
+              <ng-container *ngFor="let transmissionMediaIds of transmissionMedia">
+                <mat-option value="{{transmissionMediaIds.id}}">{{transmissionMediaIds.name}}</mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+
+
+          <mat-form-field>
+            <mat-select formControlName="statusIds" placeholder="status *">
+              <input type="text" autocomplete="off" matInput class="p-2" placeholder="status name" #statusNameSearch (input)="onStatusInputChange()" >
+              <ng-container *ngFor="let statusIds of status">
+                <mat-option value="{{statusIds.id}}">{{statusIds.name}}</mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+
+
+          <mat-form-field>
+            <input [ngxMatDatetimePicker]="createdDateFrom" formControlName="createdDateFrom" matInput
+              placeholder="created From*" readonly>
+            <mat-datepicker-toggle matSuffix [for]="$any(createdDateFrom)"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #createdDateFrom [enableMeridian]="true" >
+            </ngx-mat-datetime-picker>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input [ngxMatDatetimePicker]="createdDateTo" formControlName="createdDateTo" matInput
+              placeholder="created To*" readonly>
+            <mat-datepicker-toggle matSuffix [for]="$any(createdDateTo)"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #createdDateTo [enableMeridian]="true" >
+            </ngx-mat-datetime-picker>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input [ngxMatDatetimePicker]="closedDateFrom" formControlName="closedDateFrom" matInput placeholder="closed  From*" readonly>
+            <mat-datepicker-toggle matSuffix [for]="$any(closedDateFrom)"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #closedDateFrom [enableMeridian]="true" >
+            </ngx-mat-datetime-picker>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input [ngxMatDatetimePicker]="closedDateTo" formControlName="closedDateTo" matInput placeholder="closed  To*" readonly>
+            <mat-datepicker-toggle matSuffix [for]="$any(closedDateTo)"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #closedDateTo [enableMeridian]="true" >
+            </ngx-mat-datetime-picker>
+          </mat-form-field>
+
+
+
+
+        </div>
+      </mat-grid-tile>
+
+
+
+
+    </mat-grid-list>
+    <mat-grid-list cols="1" rowHeight="50px">
+      <mat-grid-tile>
+        <div class="controles-container pr-4">
+          <div class="text-right">
+            <button mat-button class="serch submit mr-1 text-white"  type="submit">
+              <mat-icon>search</mat-icon>Search
+            </button>
+
+            <input type="button" mat-button  class="clear btn-danger " (click)="clearFields()" value="Clear"/>
+
+          </div>
+
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+
+  </form>
+</mat-expansion-panel>
+
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title>
+      Daily Operation List <span class="separator ml-2 mr-1">|</span>
+      <span class="option" (click)=" openBottomSheet()">Import Excel</span>
+      <span class="separator mx-1">|</span>
+      <span class="option" (click)=" ExportTOExcel()">Export Excel</span>
+      <span class="separator mx-1">|</span>
+      <span class="option" (click)="ExportTOEmptyExcel()">Export Empty Excel</span>
+      <div class="" style="float: right;">
+        <span class="add" (click)="addNew()">+ Add New</span>
+      </div>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+  <div class="search-div" fxLayout="row">
+
+    <ng-template #LIST>
+      <mat-toolbar>
+        <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="close()">
+          <mat-icon class="x">close</mat-icon>
+        </button>
+      </mat-toolbar>
+      <mat-form-field class="sheet">
+        <div class="field">
+          <mat-toolbar>
+
+            <input matInput [(ngModel)]="fileAttr" readonly name="name" />
+
+
+            <button mat-flat-button class="btn-color">
+              Browse file
+            </button>
+          </mat-toolbar>
+
+          <input type="file" #fileInput id="uploadFile" (change)="uploadFileEvtF($event)" name="uploadFile"
+            multiple="multiple" />
+        </div>
+      </mat-form-field>
+
+      <button mat-flat-button (click)="upLoadF()" id="upload" class="d-block">
+        <mat-icon>cloud_upload</mat-icon> Upload
+      </button>
+    </ng-template>
+
+    <ng-template #Msg>
+      <mat-toolbar>
+        <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="closeMsg()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-toolbar>
+      <div class="sheet">
+        <div class="data" [innerHtml]="htmlToAdd">
+
+        </div>
+      </div>
+    </ng-template>
+
+    <mat-checkbox class="example-margin" (change)="DisplayAll($event)">Display All</mat-checkbox>
+
+    <mat-form-field class="search-form-field" floatLabel="never">
+      <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()">
+      <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+
+  <div class="spinner" *ngIf="dataSource==null || loader ;else table">
+    <span>Loading Data ...</span>
+    <mat-progress-bar class="example-margin"  mode="buffer" value="50">
+</mat-progress-bar>
+    
+  </div>
+
+  <ng-template #table>
+    <div class="example-container mat-elevation-z8">
+
+      <mat-table class="table-striped" [dataSource]="dataSource" #table  matSort (matSortChange)="sortData($event)" matSortActive="name" matSortDirection="asc" matSortDisableClear>
+
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef mat-sort-header hidden> ID. </mat-header-cell>
+          <mat-cell *matCellDef="let element , let row" data-label="id" [ngClass]="{'highlight' : row.isToLate}" hidden>
+            {{element.id}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="all">
+          <mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="onselectcheckall($event)">All</mat-checkbox>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row" data-label="All" [ngClass]="{'highlight' : row.isToLate}">
+            <mat-checkbox [checked]="isall" (change)="onselectcheck($event,row)"></mat-checkbox>
+          </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="complaintNumber">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Complaint Number </mat-header-cell>
+          <mat-cell *matCellDef="let element, let row" data-label="complaintNumber"
+            [ngClass]="{'highlight' : row.isToLate}">
+            <ng-container *ngIf="!editdisabled">
+              {{element.complaintNumber}}
+            </ng-container>
+            <ng-container *ngIf="editdisabled">
+              <mat-form-field hideRequiredMarker="false" appearance="legacy">
+                <input matInput placeholder="ComplaintNumber" name="complaintNumber"
+                  [(ngModel)]="element.complaintNumber">
+                <mat-error>ErrorMessage</mat-error>
+              </mat-form-field>
+            </ng-container>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="psdid">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> PSD ID </mat-header-cell>
+          <mat-cell *matCellDef="let element, let row" data-label="psdid" [ngClass]="{'highlight' : row.isToLate}">
+            <ng-container *ngIf="!editdisabled">
+              {{element.psdid}}
+            </ng-container>
+            <ng-container *ngIf="editdisabled">
+              <mat-form-field hideRequiredMarker="false" appearance="legacy">
+                <input matInput placeholder="PSDID" name="PSDID" [(ngModel)]="element.psdid">
+                <mat-error>ErrorMessage</mat-error>
+              </mat-form-field>
+            </ng-container>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="circuitID">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Circuit ID </mat-header-cell>
+          <mat-cell *matCellDef="let element , let row" data-label="circuitID" [ngClass]="{'highlight' : row.isToLate}">
+            <ng-container *ngIf="!editdisabled">
+              {{element.circuitID}}
+            </ng-container>
+            <ng-container *ngIf="editdisabled">
+              <mat-form-field hideRequiredMarker="false" appearance="legacy">
+                <input matInput placeholder="CircuitID" name="circuitID" [(ngModel)]="element.circuitID">
+                <mat-error>ErrorMessage</mat-error>
+              </mat-form-field>
+            </ng-container>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="customerName">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Customer Name </mat-header-cell>
+          <mat-cell *matCellDef="let element, let row" data-label="customerName"
+            [ngClass]="{'highlight' : row.isToLate}">
+            <ng-container *ngIf="!editdisabled">
+              {{element.customerName}}
+            </ng-container>
+            <ng-container *ngIf="editdisabled">
+              <mat-form-field hideRequiredMarker="false" appearance="legacy">
+                <input matInput placeholder="CustomerName" name="customerName" [(ngModel)]="element.customerName">
+                <mat-error>ErrorMessage</mat-error>
+              </mat-form-field>
+            </ng-container>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="_PopName">
+          <mat-header-cell *matHeaderCellDef mat-sort-header><b> Pop Name </b> </mat-header-cell>
+          <mat-cell *matCellDef="let element , let row" data-label="_PopName" [ngClass]="{'highlight' : row.isToLate}">
+            {{element._PopName}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="zoneName">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Zone Name </mat-header-cell>
+          <mat-cell *matCellDef="let element , let row" data-label="zoneName" [ngClass]="{'highlight' : row.isToLate}">
+            <ng-container *ngIf="!editdisabled">
+              {{element.zoneName}}
+            </ng-container>
+            <ng-container *ngIf="editdisabled">
+              <mat-form-field hideRequiredMarker="false" appearance="legacy">
+                <input matInput placeholder="ZoneName" name="zoneName" [(ngModel)]="element.zoneName">
+                <mat-error>ErrorMessage</mat-error>
+              </mat-form-field>
+            </ng-container>
+          </mat-cell>
+        </ng-container>
+     
+        <ng-container matColumnDef="createdDate">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> created Date </mat-header-cell>
+          <mat-cell *matCellDef="let element , let row" data-label="createdDate"
+            [ngClass]="{'highlight' : row.isToLate}">
+            <ng-container *ngIf="!editdisabled">
+              {{element.createdDate | date:'mediumDate'}}
+            </ng-container>
+            <ng-container *ngIf="editdisabled">
+              <mat-form-field>
+                <input [matDatepicker]="createdDate" matInput placeholder="created Date*" readonly>
+                <mat-datepicker-toggle matSuffix [for]="createdDate"></mat-datepicker-toggle>
+                <mat-datepicker #createdDate></mat-datepicker>
+                <mat-error>This field is mandatory.</mat-error>
+              </mat-form-field>
+            </ng-container>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="createdTime">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> creation Time </mat-header-cell>
+          <mat-cell *matCellDef="let element , let row" data-label="createdTime"
+            [ngClass]="{'highlight' : row.isToLate}">
+            <ng-container *ngIf="!editdisabled">
+              {{element.createdTime}}
+            </ng-container>
+            <ng-container *ngIf="editdisabled">
+              <mat-form-field>
+                <input [ngxTimepicker]="createdTime" matInput placeholder="created Time*" readonly>
+                <ngx-material-timepicker-toggle matSuffix [for]="createdTime"></ngx-material-timepicker-toggle>
+                <ngx-material-timepicker #createdTime></ngx-material-timepicker>
+                <mat-error>This field is mandatory.</mat-error>
+              </mat-form-field>
+            </ng-container>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="closedDate">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> closed Date </mat-header-cell>
+          <mat-cell *matCellDef="let element , let row" data-label="closedDate"
+            [ngClass]="{'highlight' : row.isToLate}">
+
+            <ng-container *ngIf="!editdisabled">
+              {{element.closedDate | date:'mediumDate'}}
+            </ng-container>
+            <ng-container *ngIf="editdisabled">
+              <mat-form-field>
+                <input [matDatepicker]="closedDate" matInput placeholder="closed Date*" readonly>
+                <mat-datepicker-toggle matSuffix [for]="closedDate"></mat-datepicker-toggle>
+                <mat-datepicker #closedDate></mat-datepicker>
+                <mat-error>This field is mandatory.</mat-error>
+              </mat-form-field>
+            </ng-container>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="closedTime">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> closed Time </mat-header-cell>
+          <mat-cell *matCellDef="let element , let row" data-label="closedTime"
+            [ngClass]="{'highlight' : row.isToLate}">
+
+            <ng-container *ngIf="!editdisabled">
+              {{element.closedTime }}
+            </ng-container>
+            <ng-container *ngIf="editdisabled">
+              <mat-form-field>
+                <input [ngxTimepicker]="closedTime" matInput placeholder="closed Time*" readonly>
+                <ngx-material-timepicker-toggle matSuffix [for]="closedTime"></ngx-material-timepicker-toggle>
+                <ngx-material-timepicker #closedTime></ngx-material-timepicker>
+                <mat-error>This field is mandatory.</mat-error>
+              </mat-form-field>
+            </ng-container>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="sla">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> SLA </mat-header-cell>
+          <mat-cell *matCellDef="let element , let row" data-label="sla" [ngClass]="{'highlight' : row.isToLate}">
+
+            <ng-container *ngIf="!editdisabled">
+              {{element.sla | slaFormat }}  
+            </ng-container>
+            <ng-container *ngIf="editdisabled">
+              <mat-form-field hideRequiredMarker="false" appearance="legacy">
+                <input matInput placeholder="sla" name="sla" [(ngModel)]="element.sla">
+                <mat-error>ErrorMessage</mat-error>
+              </mat-form-field>
+            </ng-container>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="_OperatorName">
+          <mat-header-cell *matHeaderCellDef mat-sort-header><b> operator Name </b> </mat-header-cell>
+          <mat-cell *matCellDef="let element , let row" data-label="_OperatorName"
+            [ngClass]="{'highlight' : row.isToLate}">
+            {{element._OperatorName}}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="assignedTo">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Assigned To </mat-header-cell>
+          <mat-cell *matCellDef="let element , let row" data-label="assignedTo"
+            [ngClass]="{'highlight' : row.isToLate}">
+            <ng-container *ngIf="!editdisabled">
+              {{element.assignedTo}}
+            </ng-container>
+            <ng-container *ngIf="editdisabled">
+              <mat-form-field hideRequiredMarker="false" appearance="legacy">
+                <input matInput placeholder="AssignedTo" name="assignedTo" [(ngModel)]="element.assignedTo">
+                <mat-error>ErrorMessage</mat-error>
+              </mat-form-field>
+            </ng-container>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="_TechName">
+          <mat-header-cell *matHeaderCellDef mat-sort-header><b> tech Name</b> </mat-header-cell>
+          <mat-cell *matCellDef="let element , let row" data-label="_TechName" [ngClass]="{'highlight' : row.isToLate}">
+            {{element._TechName}}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="_RemedyActionName">
+          <mat-header-cell *matHeaderCellDef mat-sort-header><b> remedy Action</b> </mat-header-cell>
+          <mat-cell *matCellDef="let element , let row" data-label="_RemedyActionName"
+            [ngClass]="{'highlight' : row.isToLate}">
+            {{element._RemedyActionName}}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="notes">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Notes </mat-header-cell>
+          <mat-cell *matCellDef="let element ,let row" data-label="notes" [ngClass]="{'highlight' : row.isToLate}">
+            <ng-container *ngIf="!editdisabled">
+              {{element.notes}}
+            </ng-container>
+            <ng-container *ngIf="editdisabled">
+              <mat-form-field hideRequiredMarker="false" appearance="legacy">
+                <input matInput placeholder="Notes" name="notes" [(ngModel)]="element.notes">
+                <mat-error>ErrorMessage</mat-error>
+              </mat-form-field>
+            </ng-container>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="_TransmissionMediaName">
+          <mat-header-cell *matHeaderCellDef mat-sort-header><b> transmission Media </b> </mat-header-cell>
+          <mat-cell *matCellDef="let element , let row" data-label="_TransmissionMediaName"
+            [ngClass]="{'highlight' : row.isToLate}">
+            {{element._TransmissionMediaName}}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="_StatusName">
+          <mat-header-cell *matHeaderCellDef mat-sort-header><b> status </b> </mat-header-cell>
+          <mat-cell *matCellDef="let element , let row" data-label="_StatusName"
+            [ngClass]="{'highlight' : row.isToLate}">
+            {{element._StatusName}}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="updateDate">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Update Date </mat-header-cell>
+          <mat-cell *matCellDef="let element ,let row" data-label="updateDate" [ngClass]="{'highlight' : row.isToLate}">
+            <ng-container *ngIf="!editdisabled">
+              {{element.updateDate | date:'mediumDate'}}
+            </ng-container>
+            <ng-container *ngIf="editdisabled">
+              <mat-form-field hideRequiredMarker="false" appearance="legacy">
+                <input matInput placeholder="UpdateDate" name="updateDate" [(ngModel)]="element.updateDate">
+                <mat-error>ErrorMessage</mat-error>
+              </mat-form-field>
+            </ng-container>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="createdBy">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Created By </mat-header-cell>
+          <mat-cell *matCellDef="let element , let row" data-label="createdBy" [ngClass]="{'highlight' : row.isToLate}">
+
+            <ng-container *ngIf="!editdisabled">
+              {{element.createdBy}}
+            </ng-container>
+            <ng-container *ngIf="editdisabled">
+              <mat-form-field hideRequiredMarker="false" appearance="legacy">
+                <input matInput placeholder="CreatedBy" name="createdBy" [(ngModel)]="element.createdBy">
+                <mat-error>ErrorMessage</mat-error>
+              </mat-form-field>
+            </ng-container>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="updatedBy">
+          <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Updated By </mat-header-cell>
+          <mat-cell *matCellDef="let element,let row" data-label="updatedBy" [ngClass]="{'highlight' : row.isToLate}">
+
+            <ng-container *ngIf="!editdisabled">
+              {{element.updatedBy}}
+            </ng-container>
+            <ng-container *ngIf="editdisabled">
+              <mat-form-field hideRequiredMarker="false" appearance="legacy">
+                <input matInput placeholder="UpdatedBy" name="updatedBy" [(ngModel)]="element.updatedBy">
+                <mat-error>ErrorMessage</mat-error>
+              </mat-form-field>
+            </ng-container>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="isToLate" hidden>
+          <mat-header-cell *matHeaderCellDef mat-sort-header hidden><b> isToLate </b> </mat-header-cell>
+          <mat-cell *matCellDef="let element" data-label="isToLate" hidden>
+            {{element.isToLate}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="flag">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Open 2 hours ago </mat-header-cell>
+          <mat-cell *matCellDef="let element , let row" data-label="Open" [ngClass]="{'highlight' : row.isToLate}"> <mat-icon class="text-danger" *ngIf="row.isToLate">notifications_active</mat-icon> </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <mat-header-cell mat-header-cell *matHeaderCellDef> Action</mat-header-cell>
+          <mat-cell *matCellDef="let row" data-label="action" [ngClass]="{'highlight' : row.isToLate}">
+
+            <ng-container *ngIf="!editdisabled">
+              <button mat-button class="text-success font-weight-bolder" (click)="editROw(row.id)">
+                Edit
+              </button>
+              <span class="mx-2">|</span>
+              <button mat-button class="font-weight-bolder" color="warn" (click)="onDelete(row)">
+                Delete
+              </button>
+            </ng-container>
+            <ng-container *ngIf="editdisabled">
+              <button class="btn-success btn-sm mr-1" (click)="updateEdit(row)">
+                Update
+              </button>
+              <button class="btn-danger btn-sm" (click)="cancelEdit()">
+                Cancel
+              </button>
+            </ng-container>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="noData">
+          <mat-footer-cell *matFooterCellDef colspan="6">
+            No Data ...
+          </mat-footer-cell>
+
+        </ng-container>
+       
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource.data.length==0 && dataSource !=null)}"></mat-footer-row>
+         
+       
+
+      </mat-table>
+
+    </div>
+  </ng-template>
+
+  <mat-paginator [pageSizeOptions]="[25,50, 100]" [pageSize]="25" (page)="pageChanged($event)" showFirstLastButtons>
+  </mat-paginator>
+
+</mat-card>
+
+
+
+
+<app-loader *ngIf="loading">
+</app-loader>
+<!--  -->

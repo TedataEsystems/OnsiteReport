@@ -1,0 +1,57 @@
+<mat-toolbar>
+    <div>
+        <a routerLink="#">
+            <img src="../../../assets/image/f.png" height="40" width="60"/>
+            <!-- <img src="../../../assets/image/s3.png" height="40" width="160"/> -->
+            <span class="slogan">Field Operation Report</span>
+            
+        </a>
+    </div>
+    <div>
+        <button mat-icon-button (click)="onToggleSidenav()">
+            <mat-icon class="x">menu</mat-icon>
+        </button>
+    </div>
+   
+   
+    <div fxFlex fxLayout fxLayoutAlign="end" >
+        <ul fxLayout fxLayoutGap="15px" class="navigation.items">
+            <!-- <li>
+                <button mat-icon-button  [matMenuTriggerFor]="notification">
+                    <mat-icon matBadge="3" matBadgeColor="warn">notifications_active</mat-icon>
+               </button>
+               
+               <mat-menu   class="note" #notification="matMenu">
+                 
+                   <button  mat-menu-item title="">
+                       <mat-icon>notifications</mat-icon> note 1 
+                    </button>
+                    <mat-divider></mat-divider>
+                    <button  mat-menu-item title="">
+                        <mat-icon>notifications</mat-icon> note 2 
+                     </button>
+                     <mat-divider></mat-divider>
+                     <button  mat-menu-item title="">
+                        <mat-icon>notifications</mat-icon> note 3 
+                     </button>
+                  
+                 
+               </mat-menu> 
+            </li>
+            -->
+            <li>
+                <button mat-button (click)="logOut()">
+                   Sign Out  <mat-icon class="ml-1">exit_to_app</mat-icon>
+                    <!-- <span>username</span> 
+                    <mat-icon> person_outline </mat-icon> -->
+                </button>
+                <!-- <mat-menu #menu="matMenu">
+                    <button mat-menu-item  >
+                        <mat-icon>exit_to_app</mat-icon>Signout
+                    </button>
+                </mat-menu> -->
+            </li>
+        </ul>
+    </div>
+
+</mat-toolbar>

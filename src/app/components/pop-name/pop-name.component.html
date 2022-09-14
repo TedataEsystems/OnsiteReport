@@ -1,0 +1,143 @@
+
+ <mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-title>
+       Pop Name
+       <div style="float: right;">
+        <span class="add"  (click)="addNew()">+ Add New</span></div>
+       </mat-card-title>
+
+    </mat-card-header>
+    <mat-divider></mat-divider>
+<div class="search-div" fxLayout="row">
+  <div *ngIf="show">
+  <mat-form-field class="example-full-width mr-2">
+    <mat-label>PopName</mat-label>
+    <input type="text" name="name" matInput  [(ngModel)]="popName" (keyup)="onChecknameIsalreadysign()">
+    <input type="hidden" name="id" formControlName="id"  [(ngModel)]="popNameId" >
+    <span class="mat-error" *ngIf="isNameRepeated">name already exist</span>
+</mat-form-field>
+<mat-form-field>
+  <mat-select [(ngModel)]="zoneNameId" placeholder="Zone Name*">
+    <ng-container *ngFor="let element of zoneNames">
+      <mat-option value="{{element.id}}">{{element.name}}</mat-option>
+    </ng-container>
+  </mat-select>
+</mat-form-field>
+<button mat-raised-button (click)="onCreateUpdate()"  class="search" [disabled]="!popName.length || isDisabled">
+   Save
+</button>
+</div>
+    <mat-form-field class="search-form-field" floatLabel="never">
+        <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()"> 
+       <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+            <mat-icon>close</mat-icon>
+        </button> 
+    </mat-form-field>
+</div>
+
+<div class="spinner" *ngIf="dataSource==null || loader ;else table">
+  <span>Loading Data ...</span>
+  <mat-progress-bar class="example-margin"  mode="buffer" value="50">
+</mat-progress-bar>
+  
+</div>
+<ng-template #table>
+    <div class="example-container mat-elevation-z8">
+
+      <mat-table [dataSource]="dataSource" #table  matSort (matSortChange)="sortData($event)" matSortActive="name" matSortDirection="asc" matSortDisableClear>
+  
+ 
+    <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> ID. </mat-header-cell>
+        <mat-cell *matCellDef="let element" data-label="id" > {{element.id}} </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="name">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+        <mat-cell *matCellDef="let element" data-label="name"> 
+            <ng-container *ngIf="!editdisabled">
+                {{element.name|| 'N/A'}} 
+               </ng-container>
+               <ng-container *ngIf="editdisabled">
+                 <mat-form-field hideRequiredMarker="false" appearance="legacy">
+                   <input matInput placeholder="Name"  name="name" [(ngModel)]="element.name" (keyup)="onChecknameIsalreadysignWhenUpdate(element)">
+                   <span class="mat-error" *ngIf="isNameUpdatedRepeated && element.id == editUsr">name already exist</span>
+                 </mat-form-field>
+               </ng-container>
+        </mat-cell>
+    </ng-container>     
+    <ng-container matColumnDef="zoneName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header><b> Zone Name </b> 
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" data-label="zoneName">
+        {{element.zoneName.name|| 'N/A'}}
+      </mat-cell>
+  </ng-container>
+
+
+    <ng-container matColumnDef="action">
+        <mat-header-cell mat-header-cell *matHeaderCellDef> Action</mat-header-cell>
+        <mat-cell *matCellDef="let row" data-label="action">
+
+
+            <ng-container *ngIf="!editdisabled">
+               
+                <button mat-button class="text-success font-weight-bolder"  (click)="editROw(row)">
+                  Edit
+                </button>
+               <span class="mx-2">|</span>
+                <button mat-button class="font-weight-bolder" color="warn"  (click)="onDelete(row)">
+                   Delete
+                  
+                </button>
+              </ng-container>
+              <ng-container *ngIf="editdisabled">
+                <button  class="btn-success btn-sm mr-1" [disabled]="isDisabled" (click)="updateEdit(row)">
+                   Update
+                </button>
+               
+                <button  class="btn-danger btn-sm"  (click)="cancelEdit()">
+                  Cancel
+                </button>
+              </ng-container>
+            
+        </mat-cell>
+
+      
+
+    </ng-container>
+     
+     
+    
+      
+    <ng-container matColumnDef="noData">
+        <mat-footer-cell *matFooterCellDef colspan="6">
+           No Data ...
+        </mat-footer-cell>
+
+    </ng-container>
+  
+  
+    
+    <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource.data.length==0 && dataSource !=null)}"></mat-footer-row>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+   
+
+</mat-table>
+<!-- end test -->
+</div>
+</ng-template>
+
+
+<mat-paginator [pageSizeOptions]="[50, 25, 100]" [pageSize]="25" (page)="pageChanged($event)" showFirstLastButtons >
+</mat-paginator>
+</mat-card>
+
+
+
+<!--   
+<app-loader *ngIf="loading">
+</app-loader> -->

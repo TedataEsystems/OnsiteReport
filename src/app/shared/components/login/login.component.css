@@ -1,0 +1,115 @@
+.content-body{
+  min-height:100%;
+  padding:30px 1rem;
+  background-image:url("../../../../assets/image/bc5.jpg") ;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  display: block;
+  position: relative;
+}
+ 
+.content-body::before{
+  content: "";
+position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background:#464538a1;
+
+  background:linear-gradient( #f5f5f5f5 ,#012535d6);
+  background:-webkit-linear-gradient( #f5f5f5f5 ,#012535d6);
+  background:-moz-linear-gradient( #f5f5f5f5 ,#012535d6);
+  background:-o-linear-gradient( #f5f5f5f5 ,#012535d6);
+
+}
+mat-label {
+  color: #eee!important;
+}
+h2{
+  text-align: left;
+    margin-left: 10%;
+    color: #ffffff;
+    visibility: hidden;
+}
+mat-card{
+  background-color:transparent !important;
+  max-width: 450px;
+  margin: 2em auto;
+  text-align: center;
+  height: 480px;
+  /* border-radius:30px 0 30px 0; */
+  padding-top: 0px !important;
+  color: #eee!important;
+ 
+}
+.mat-card:not([class*=mat-elevation-z]){
+  box-shadow: 14px 0px 20px -9px rgb(30 30 31), -14px 10px 20px -9px rgb(30 30 31) !important;
+
+}
+.header{
+   /* position: absolute; */
+  text-align: center;
+  margin: 0 auto 50px auto; 
+  width: 300px;
+  height: 90px;
+align-items: center;
+  padding:20px 15px
+ 
+
+}
+.full-width{
+  width: 80%;
+}
+.forgot-password{
+  padding-left: 0px;
+}
+.email-input{
+  padding-top: 20px;
+}
+.aLink{
+  float: right;
+  padding-right:60px;
+  text-decoration:none;
+}
+.form-input{
+  margin-bottom:20px
+}
+.login{
+  background-color: #cad1d3;
+  color: #1c3b46;
+  width: 80%;
+  border-radius: 19px;
+  margin-top: 35px;
+  letter-spacing: 1.5px;
+  font-size: 17px;
+  box-shadow: 1px 5px 20px #2c2e2f;
+  font-weight: 600;
+}
+.mat-input-element{
+  color: #ffffff !important;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus
+ { -webkit-text-fill-color: #ffffff;
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+.mat-form-field{
+  margin-bottom: 25px !important;
+}
+.mat-typography h2 {
+  
+  margin: 0 0 25px;
+}
+.mat-button-wrapper{
+  color: #fff !important;
+}
+.slogan{
+  font-size: 30px !important;
+  color: #fff !important;
+  text-shadow: 0px 3px 5px black;
+}

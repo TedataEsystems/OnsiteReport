@@ -1,0 +1,23 @@
+<div class="row mx-0 pt-4">
+  <div class="col-sm-12 col-md-12">
+           <mat-card class="example-card">
+               <mat-card-header>
+                   <mat-card-title class="">
+                       <span class="d-inline-block text-left">Status of chart</span>
+                       <span class="total d-inline-block" [matBadge]="count" matBadgeOverlap="false" style="float: right;" >Total</span>
+                      </mat-card-title> 
+               </mat-card-header>
+           
+               <mat-divider></mat-divider>
+               <div class="chart-wrapper">
+                   <canvas baseChart 
+                   [data]="doughnutChartDatap"
+                   [labels]="doughnutChartLabelsp"
+                   [colors]="colors"
+                   [chartType]="doughnutChartType">
+                 </canvas>
+               </div>
+           </mat-card>
+         </div> 
+         
+   </div>

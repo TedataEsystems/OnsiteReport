@@ -1,0 +1,73 @@
+
+<div fxlayout="column" fxlayoutalign="center center" class="user-block py-3" style="flex-direction: column; box-sizing: border-box; display: flex; place-content: center; align-items: center;">
+    <img src="../../../../../assets/image/user2.png" alt="user-image">
+    <h2 class="mt-2 mb-0 ng-star-inserted">{{userName}}</h2>
+    <!-- <p class="secondary-text-color ng-star-inserted">user role</p> -->
+</div>
+<mat-divider></mat-divider>
+<mat-list>
+
+
+    <a mat-list-item routerLink="./" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+        <mat-icon>home</mat-icon>
+        <span class="nav-caption"> Home</span>
+    </a>
+    <a mat-list-item routerLink="./dailey" routerLinkActive="active" >
+        <mat-icon>today</mat-icon>
+        <span class="nav-caption"> Daily</span>
+    </a>
+    <a mat-list-item routerLink="./popNameAbbreviations" routerLinkActive="active" >
+        <mat-icon>list</mat-icon>
+        <span class="nav-caption"> Pop Name Abbreviations</span>
+    </a>
+    <!-- <a mat-list-item routerLink="./test" routerLinkActive="active">
+        <mat-icon>engineering</mat-icon>
+        <span class="nav-caption">Form</span>
+    </a> -->
+
+   
+ 
+    <a mat-list-item   (click)="showSubmenu = !showSubmenu;" class="parent" *ngIf="userRole=='admin'">
+        <mat-icon>settings</mat-icon>
+        <span class=" full-width  nav-caption" *ngIf="isExpanded || isShowing">Settings</span>
+
+        <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubmenu}" *ngIf="isExpanded || isShowing">expand_more
+        </mat-icon>
+    </a>
+    <div class="submenu" [ngClass]="{'expanded' : showSubmenu}" *ngIf="isShowing || isExpanded">
+
+        <a mat-list-item routerLink="./operator" routerLinkActive="active">
+            <mat-icon>label_important</mat-icon> 
+            <span class="nav-caption">Operator</span>
+        </a>
+        <a mat-list-item routerLink="./popName"  routerLinkActive="active">
+            <mat-icon>label_important</mat-icon>
+            <span class="nav-caption">Pop Name</span>
+        </a>
+        <a mat-list-item routerLink="./zoneName"  routerLinkActive="active">
+            <mat-icon>label_important</mat-icon>
+            <span class="nav-caption">Zone Name</span>
+        </a>
+        <a mat-list-item routerLink="./transmissionMedia"  routerLinkActive="active">
+            <mat-icon>label_important</mat-icon>
+            <span class="nav-caption">Transmission Media</span>
+        </a>
+        <a mat-list-item routerLink="./techName"  routerLinkActive="active">
+            <mat-icon>label_important</mat-icon>
+            <span class="nav-caption">Tech Name</span>
+        </a>
+        <a mat-list-item routerLink="./status"  routerLinkActive="active">
+            <mat-icon>label_important</mat-icon>
+            <span class="nav-caption">Status</span>
+        </a>
+        <a mat-list-item routerLink="./remedyAction"  routerLinkActive="active">
+            <mat-icon>label_important</mat-icon>
+            <span class="nav-caption">Remedy Action</span>
+        </a>
+        <a mat-list-item routerLink="./logs"  routerLinkActive="active">
+            <mat-icon>label_important</mat-icon>
+            <span class="nav-caption">Logs</span>
+        </a>
+    </div>
+
+</mat-list>

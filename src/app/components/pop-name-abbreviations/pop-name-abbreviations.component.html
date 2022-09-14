@@ -1,0 +1,81 @@
+<mat-card class="example-card">
+    <mat-card-header>
+        <mat-card-title>
+            All Pop Name Abbreviation
+        </mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+
+
+    <div class="search-div">
+        <mat-form-field class="search-form-field" floatLabel="never">
+            <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()">
+            <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+    </div>
+    <div class="spinner" *ngIf="dataSource==null || loader ;else table">
+        <span>Loading Data ...</span>
+        <mat-progress-bar class="example-margin" mode="buffer" value="50">
+    </mat-progress-bar>
+        
+      </div>
+      <ng-template #table>
+    <div class="example-container mat-elevation-z8">
+        <mat-table [dataSource]="dataSource" matSort>
+            <!-- <ng-container matColumnDef="id">
+                <mat-header-cell *matHeaderCellDef mat-sort-header><b> Id</b> </mat-header-cell>
+                <mat-cell *matCellDef="let element" data-label="id"> {{element.id}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="elementId">
+                <mat-header-cell *matHeaderCellDef mat-sort-header><b> Element Id</b> </mat-header-cell>
+                <mat-cell *matCellDef="let element" data-label="elementId"> {{element.elementId}} </mat-cell>
+            </ng-container> -->
+
+            <ng-container matColumnDef="environment">
+                <mat-header-cell *matHeaderCellDef mat-sort-header><b> Environment</b> </mat-header-cell>
+                <mat-cell *matCellDef="let element" data-label="environment"> {{element.environment}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="zoneName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header><b> Zone Name</b> </mat-header-cell>
+                <mat-cell *matCellDef="let element" data-label="zoneName"> {{element.zoneName}}
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="popName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header><b>Pop Name</b> </mat-header-cell>
+                <mat-cell *matCellDef="let element" data-label="popName"> {{element.popName}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="exchCode">
+                <mat-header-cell *matHeaderCellDef mat-sort-header><b>Exch Code </b> </mat-header-cell>
+                <mat-cell *matCellDef="let element" data-label="exchCode"> {{element.exchCode}} </mat-cell>
+            </ng-container>
+            <!-- <ng-container matColumnDef="loading">
+                <mat-footer-cell *matFooterCellDef colspan="6">
+                    <img src="../../../assets/image/cylinder.gif" height="90px" width="100px">
+                </mat-footer-cell>
+
+            </ng-container> -->
+
+            <ng-container matColumnDef="noData">
+                <mat-footer-cell *matFooterCellDef colspan="6">
+                    No data
+                </mat-footer-cell>
+
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            <!-- <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':(dataSource.data.length!=null)}">
+            </mat-footer-row> -->
+            <mat-footer-row *matFooterRowDef="['noData']"
+                [ngClass]="{'hide':!(dataSource!=null && dataSource.data.length==0)}"></mat-footer-row>
+
+        </mat-table>
+    </div>
+</ng-template>
+    <mat-paginator [pageSizeOptions]="[50, 25, 100]" [pageSize]="25" showFirstLastButtons>
+    </mat-paginator>
+</mat-card>
